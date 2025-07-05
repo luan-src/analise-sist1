@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agendamento de Consulta</title>
+</head>
+<body>
+<h2>Agende sua Consulta</h2>
+<form onsubmit="event.preventDefault(); agendar();">
+    <label for="paciente">Paciente:</label>
+    <input type="text" id="paciente" /><br><br>
+    <label for="datahora">Data e Hora:</label>
+    <input type="datetime-local" id="datahora" /><br><br>
+    <button type="submit">Agendar</button>
+</form>
+
+<p id="mensagem"></p>
+
+<script>
+    function agendar() {
+        const p = document.getElementById("paciente").value;
+        const dt = document.getElementById("datahora").value;
+
+        fetch("/consultas?paciente=" + p + "&dataHora=" + dt, {
+            method: "POST"
+        })
+        .then(res => res.text())
+        .then(msg => document.getElementById("mensagem").textContent = msg);
+    }
+</script>
+</body>
+</html>
