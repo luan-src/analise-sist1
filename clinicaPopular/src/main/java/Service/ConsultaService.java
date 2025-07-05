@@ -1,7 +1,6 @@
 package Service;
 
 import Model.Consulta;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
