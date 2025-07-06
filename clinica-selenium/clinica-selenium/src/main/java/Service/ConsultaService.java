@@ -1,6 +1,5 @@
 package Service;
 
-import br.faccat.clinica_selenium.Paciente;
 import Model.Consulta;
 import org.springframework.stereotype.Service;
 
@@ -22,21 +21,4 @@ public class ConsultaService {
     public List<Consulta> listar() {
         return new ArrayList<>(consultas);
     }
-    public void adicionarConsultaAoPaciente(String cpf, Consulta consulta) {
-        Paciente paciente = pacienteRepository.findByCpf(cpf);
-        if (paciente == null) {
-            throw new IllegalArgumentException("Paciente não encontrado com o CPF: " + cpf);
-        }
-        consulta.setPaciente(paciente); // se houver relação
-        consultaRepository.save(consulta);
-    }
-
-    public List<Consulta> listarConsultasPorCpf(String cpf) {
-        Paciente paciente = pacienteRepository.findByCpf(cpf);
-        if (paciente == null) {
-            throw new IllegalArgumentException("Paciente não encontrado.");
-        }
-        return consultaRepository.findByPaciente(paciente);
-    }
-
 }
