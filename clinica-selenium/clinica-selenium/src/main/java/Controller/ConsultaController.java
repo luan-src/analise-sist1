@@ -15,9 +15,10 @@ public class ConsultaController {
     }
 
     @PostMapping
-    public ResponseEntity<String> agendar(@RequestParam String paciente,
+    public ResponseEntity<String> agendar(@RequestParam String cpf,
+                                          @RequestParam String nome,
                                           @RequestParam String dataHora) {
-        service.agendar(paciente, dataHora);
-        return ResponseEntity.ok("Consulta agendada para " + paciente + " em " + dataHora);
+        service.agendarConsulta(cpf, nome, dataHora);
+        return ResponseEntity.ok("Consulta agendada para " + nome + " (CPF: " + cpf + ") em " + dataHora);
     }
 }

@@ -1,9 +1,14 @@
 package br.faccat.clinica_selenium;
 
+import Model.Consulta;
+import Model.Paciente;
+import Service.ConsultaService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import Model.Consulta;
-import Service.ConsultaService;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ClinicaSeleniumApplicationTests {
@@ -14,20 +19,17 @@ class ClinicaSeleniumApplicationTests {
 
 	@Test
 	public void testAssociarConsultaAPacientePorCpf() {
-		Paciente paciente = new Paciente();
-		paciente.setNome("Maria");
-		paciente.setCpf("12345678900");
+		// Instância do serviço
+		ConsultaService service = new ConsultaService();
 
-		pacienteRepository.save(paciente);
+		// Agendar consulta para o CPF
+		service.agendarConsulta("12345678900", "Maria", "2025-07-06T09:00");
 
-		Consulta consulta = new Consulta();
-		consulta.setDescricao("Consulta de rotina");
+		// Buscar as consultas do paciente
+		List<Consulta> consultas = service.listarConsultasPorCpf("12345678900");
 
-		ConsultaService.adicionarConsultaAoPaciente("12345678900", consulta);
-
-		List<Consulta> consultas = ConsultaService.listarConsultasPorCpf("12345678900");
+		// Verificações
 		assertEquals(1, consultas.size());
-		assertEquals("Consulta de rotina", consultas.get(0).getDescricao());
+		assertEquals("Maria", consultas.get(0).getPaciente());
 	}
-
 }
